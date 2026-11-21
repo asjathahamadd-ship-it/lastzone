@@ -820,7 +820,7 @@ $('keys').innerHTML = isTouch
   ? 'Left thumb: move (push far to sprint) &nbsp;·&nbsp; Right side: look<br>Hold FIRE and drag to aim while shooting &nbsp;·&nbsp; AIM to zoom'
   : 'Click to lock the mouse &nbsp;·&nbsp; WASD move, Shift sprint<br>Left click shoot, right click aim &nbsp;·&nbsp; E pick up &nbsp;·&nbsp; Q swap &nbsp;·&nbsp; R reload &nbsp;·&nbsp; H heal';
 $('play').textContent = 'LOADING...'; $('play').disabled = true;
-new GLTFLoader().load('models/soldier.glb', gltf => { SOLDIER = gltf; boot(); }, undefined, err => { console.error(err); $('play').textContent = 'LOAD FAILED'; });
+new GLTFLoader().load('models/soldier.json', gltf => { SOLDIER = gltf; boot(); }, undefined, err => { console.error(err); $('play').textContent = 'LOAD FAILED'; });
 function boot() {
 $('play').textContent = 'PLAY'; $('play').disabled = false; $('play').onclick = start;
 buildWorld(); fighters = []; feed = [];
