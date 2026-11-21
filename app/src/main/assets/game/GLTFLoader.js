@@ -2538,7 +2538,7 @@ class GLTFParser {
 
 		}
 
-		if ( typeof createImageBitmap === 'undefined' || isSafari || ( isFirefox && firefoxVersion < 98 ) ) {
+		if ( true ) { // always <img>-based loading (works under strict CSP)
 
 			this.textureLoader = new TextureLoader( this.options.manager );
 
