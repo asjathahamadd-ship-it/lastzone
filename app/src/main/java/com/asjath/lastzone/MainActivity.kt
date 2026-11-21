@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.webkit.WebViewAssetLoader
 
 /** Hosts the 3D game (assets/game/index.html) full screen in landscape. */
 class MainActivity : Activity() {
@@ -35,7 +38,14 @@ class MainActivity : Activity() {
             @Suppress("DEPRECATION")
             settings.allowFileAccessFromFileURLs = true
             settings.mediaPlaybackRequiresUserGesture = false
-            webViewClient = WebViewClient()
+            // Serve assets over https so ES modules and the 3D model load
+            val loader = WebViewAssetLoader.Builder()
+                .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this@MainActivity))
+                .build()
+            webViewClient = object : WebViewClient() {
+                override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? =
+                    loader.shouldInterceptRequest(request.url)
+            }
             webChromeClient = WebChromeClient()
             setLayerType(View.LAYER_TYPE_HARDWARE, null)
             isHapticFeedbackEnabled = false
@@ -43,7 +53,7 @@ class MainActivity : Activity() {
         }
         setContentView(web)
         hideSystemBars()
-        web.loadUrl("file:///android_asset/game/index.html")
+        web.loadUrl("https://appassets.androidplatform.net/assets/game/index.html")
     }
 
     private fun hideSystemBars() {

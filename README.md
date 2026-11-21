@@ -24,3 +24,7 @@ Low walls and crates block bullets but you can see over them. Crates can be shot
 - `app/src/main/assets/game/index.html`: the whole game (three.js)
 - `app/src/main/java/.../MainActivity.kt`: full-screen landscape app shell
 - `.github/workflows/build.yml`: builds the APK and publishes a release on every change
+
+## Credits
+
+Soldier character and animations: the "Soldier" model from the three.js examples (a Mixamo character).
